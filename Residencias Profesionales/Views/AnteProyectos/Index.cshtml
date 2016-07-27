@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Residencias.Models.Api.AnteProyectos>
+
+@{
+    ViewBag.Title = "Anteproyectos";
+    List<SelectListItem> Opciones = ViewBag.Opciones;
+}
+
+<h2>Lista de Anteproyectos</h2>
+
+<p>
+    @Html.ActionLink("Nueva Propuesta", "Create")
+</p>
+<table class="table table-hover table-responsive table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.objetivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.opcion_elegida)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fe_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fe_final)
+        </th>
+        <th></th>
+    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.Raw(item.objetivo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Opciones.First(m => m.Value.As<short>() == item.opcion_elegida).Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fe_inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fe_final)
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-lg btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opciones
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Cronograma", "WorkSchedule", new { id = item.nu_anteproyecto })</li>
+                            <li>@Html.ActionLink("Editar", "Edit", new { id = item.nu_anteproyecto })</li>
+                            <li>@Html.ActionLink("Borrar", "Delete", new { id = item.nu_anteproyecto })</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+</table>

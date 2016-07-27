@@ -1,0 +1,64 @@
+﻿@model Residencias.Models.Api.Inscripciones
+
+@{
+    ViewBag.Title = "Inscripciones";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Inscripciones en Grupo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.nu_grupo, "nu_grupo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("nu_grupo", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.nu_grupo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="col-md-10">
+            <select class="form-control" id="Roles" multiple="multiple" name="Roles">
+                <option>Ninguno</option>
+                @foreach (var item in ViewBag.Roles) {
+                    if (Model.Roles.Where(x => x.RoleId == item.Id).Count() > 0) {
+                        @:
+                        <option selected="selected" value="@item.Id">@roles[item.Name]</option>
+                        } else {
+                        @:
+                        <option value="@item.Id">@roles[item.Name]</option>
+                        }
+                }
+            </select>
+        </div>*@
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Id", null, htmlAttributes: new { @class = "form-control", @multiple = true })
+                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-lg btn-primary btn-block" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar a la lista", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,84 @@
+﻿@model Residencias.Models.Api.AnteProyectosDeleteConfirm
+
+@{
+    ViewBag.Title = "Borrar";
+    List<SelectListItem> Opciones = ViewBag.Opciones;
+}
+
+<h2>Borrar</h2>
+
+<h3>Confirme por favor que desea borrar la propuesta de AnteProyecto de Residencias Profesionales</h3>
+<div>
+    <h4>AnteProyectos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.anteProyectos.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anteProyectos.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anteProyectos.objetivo)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.anteProyectos.objetivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anteProyectos.opcion_elegida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Opciones.First(m => m.Value.As<short>() == model.anteProyectos.opcion_elegida).Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anteProyectos.fe_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anteProyectos.fe_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anteProyectos.fe_final)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anteProyectos.fe_final)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal alert-warning">
+            @Html.AntiForgeryToken()
+            <p>Escriba el nombre completo del proyecto para confirmar su desición </p>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Confirmar" class="btn btn-lg btn-primary btn-block" /> |
+                    @Html.ActionLink("Regresar a la lista", "Index")
+                </div>
+            </div>
+            
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/site")
+}

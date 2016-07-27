@@ -1,0 +1,131 @@
+﻿@using Residencias.Models
+
+@{
+    var menus = new[]
+    {
+        new {id="anteproyectos", LinkText="AnteProyectos", ActionName="",ControllerName="", Roles="administrador,estudiante,docente,division,coordinacion,presidente,secretario",
+            Menu= new[]
+            {
+                //new { LinkText="Nuevo", ActionName="Create",ControllerName="AnteProyectos"},
+                new { LinkText="Lista", ActionName="Index",ControllerName="AnteProyectos"},
+            }
+        },
+
+        new {id="proyectos", LinkText="Proyectos", ActionName="",ControllerName="", Roles="administrador,residente,asesorinterno,division,coordinacion",
+            Menu= new[]
+            {
+                new { LinkText="Lista", ActionName="Index",ControllerName="AnteProyectos"},
+            }
+        },
+
+        new {id="administracion", LinkText="Administración", ActionName="",ControllerName="", Roles="administrador,division,coordinacion",
+            Menu= new[]
+            {
+                new { LinkText="Usuarios y Permisos", ActionName="Index",ControllerName="Manage"},
+                new { LinkText="Carreras", ActionName="Index",ControllerName="Carreras"},
+                new { LinkText="Periodos", ActionName="Index",ControllerName="Periodos"},
+                new { LinkText="Grupos", ActionName="Index",ControllerName="Grupos"},
+                new { LinkText="Parametros", ActionName="Index",ControllerName="Parametros"},
+            }
+        },
+        new {id="about", LinkText="Acerca", ActionName="About",ControllerName="Home", Roles="all",
+            Menu= new[] { new { LinkText="", ActionName="",ControllerName=""} }
+        },
+        new {id="contact", LinkText="Contacto", ActionName="Contact",ControllerName="Home", Roles="all",
+            Menu= new[] { new { LinkText="", ActionName="",ControllerName=""} }
+        },
+    };
+}
+
+        @*new {id="division", LinkText="División de Carrera", ActionName="",ControllerName="", Roles="division",
+            Menu= new[]
+            {
+                new { LinkText="Anteproyectos", ActionName="Index",ControllerName="AnteProyectos"},
+                new { LinkText="Proyectos", ActionName="Index",ControllerName="Proyectos"},
+                new { LinkText="Academia", ActionName="Index",ControllerName="Academia"},
+            }
+        },
+        new {id="docente", LinkText="Docente", ActionName="",ControllerName="", Roles="docente",
+            Menu= new[]
+            {
+                new { LinkText="Anteproyectos", ActionName="Index",ControllerName="AnteProyectos"},
+                new { LinkText="Proyectos", ActionName="Index",ControllerName="Proyectos"},
+                new { LinkText="Academia", ActionName="Index",ControllerName="Academia"},
+            }
+        },
+        new {id="estudiante", LinkText="Estudiante", ActionName="",ControllerName="", Roles="estudiante",
+            Menu= new[]
+            {
+                new { LinkText="Anteproyectos", ActionName="Index",ControllerName="AnteProyectos"},
+            }
+        },
+        new {id="serviciosescolares", LinkText="Servicios Escolares", ActionName="",ControllerName="", Roles="serviciosescolares",
+            Menu= new[]
+            {
+                new { LinkText="Residentes", ActionName="Index",ControllerName="AnteProyectos"},
+                new { LinkText="Proyectos", ActionName="Index",ControllerName="Proyectos"},
+            }
+        },
+        new {id="vinculacion", LinkText="Vinculación y Extensión", ActionName="",ControllerName="", Roles="vinculacion",
+            Menu= new[]
+            {
+                new { LinkText="Empresas", ActionName="Index",ControllerName="Vinculacion"},
+                new { LinkText="Residentes", ActionName="Residentes",ControllerName="Vinculacion"},
+                new { LinkText="Anteproyectos", ActionName="Index",ControllerName="AnteProyectos"},
+            }
+        },*@
+
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    var db = new ApplicationDbContext();
+    var roles = new System.Collections.Specialized.StringCollection();
+
+    foreach (var role in db.Roles.ToList())
+    {
+        if (HttpContext.Current.User.IsInRole(role.Name))
+        {
+            roles.Add(role.Name);
+        }
+    }
+
+    var links = from item in menus
+                let n = item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                where n.Any(x => roles.Contains(x) || x == "all")
+                select item;
+
+    foreach (var link in links)
+    {
+        switch (link.id)
+        {
+            case "home":
+            case "about":
+            case "contact":
+                @:<li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                break;
+            default:
+                @: <li class="dropdown">
+                    @:<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@link.LinkText <span class="caret"></span></a>
+                    @: <ul class="dropdown-menu">
+                foreach (var l in link.Menu)
+                {
+                    @:<li> @Html.ActionLink(l.LinkText, l.ActionName, l.ControllerName)</li>
+                }
+                    @:</ul>
+                @: </li>
+                break;
+                }
+    }
+}
+else
+{
+    var links = from item in menus
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => x == "all")
+                select item;
+    foreach (var link in links)
+    {
+        @:
+        <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+    }
+}

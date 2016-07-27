@@ -1,0 +1,50 @@
+﻿@model Residencias.Models.Api.Carreras
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Carreras</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.objetivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.objetivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.perfil_ingreso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.perfil_ingreso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.perfil_egreso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.perfil_egreso)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.nu_carrera }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,26 @@
+﻿@model Residencias.Models.Api.Parametros
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Parametros</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.periodo.nu_periodo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.periodo.nu_periodo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.nu_parametro }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

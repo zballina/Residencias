@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Residencias.Models.Api.Parametros>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.periodo.fe_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.periodo.fe_final)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.periodo.fe_inicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.periodo.fe_final)
+        </td>
+        <td>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Opciones
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Editar", "Edit", new { id = item.nu_parametro })</li>
+                    <li>@Html.ActionLink("Detalles", "Details", new { id = item.nu_parametro })</li>
+                    <li>@Html.ActionLink("Borrar", "Delete", new { id = item.nu_parametro })</li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

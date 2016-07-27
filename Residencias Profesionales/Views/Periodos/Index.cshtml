@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Residencias.Models.Api.IndexPeriodos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-lg btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Opciones
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>@Html.ActionLink("Editar", "Edit", new { id = item.nu_periodo })</li>
+                    <li>@Html.ActionLink("Detalles", "Details", new { id = item.nu_periodo })</li>
+                    <li>@Html.ActionLink("Borrar", "Delete", new { id = item.nu_periodo })</li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
